@@ -6,7 +6,7 @@ export enum CartStatuses {
     ORDERED = 'ORDERED',
 }
 
-@Entity()
+@Entity('carts')
 export class Cart {
     @PrimaryGeneratedColumn('uuid')
     id: string;

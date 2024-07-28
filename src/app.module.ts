@@ -18,7 +18,7 @@ import { Product } from './cart/product.entity';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       entities: [Cart, CartItem, Product],
-      synchronize: true,
+      synchronize: false,
       //for learning purposes, not for prod
       ssl: {
         rejectUnauthorized: false

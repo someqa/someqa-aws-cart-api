@@ -2,12 +2,13 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 't
 import { Cart } from './cart.entity';
 import { Product } from './product.entity';
 
-@Entity()
+@Entity('cart_items')
 export class CartItem {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @ManyToOne(() => Cart, cart => cart.items)
+    @ManyToOne(() => Cart, cart => cart.items, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'cart_id' })
     cart: Cart;
 
     @ManyToOne(() => Product)
