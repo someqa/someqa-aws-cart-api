@@ -2,7 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as iam from 'aws-cdk-lib/aws-iam';
-import * as apigateway from 'aws-cdk-lib/aws-apigateway';
+import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
 import * as path from 'path';
 import 'dotenv/config';
 
@@ -58,41 +58,10 @@ export class NestCdkStackRDS extends cdk.Stack {
         });
 
 
-        const api = new apigateway.RestApi(this, 'NestJSAPI', {
-            restApiName: 'MyService'
-        });
+        new LambdaRestApi(this, 'nestAPIGateway', {
+            restApiName: 'nestAPIGateway',
+            handler: lambdaFunction,
+        })
 
-
-        const lambdaIntegration = new apigateway.LambdaIntegration(lambdaFunction);
-
-        const resource = api.root.addResource('NestJS');
-        resource.addMethod('GET', lambdaIntegration);
-        resource.addMethod('POST', lambdaIntegration);
-        resource.addMethod('PUT', lambdaIntegration);
-        resource.addMethod('DELETE', lambdaIntegration);
-
-        resource.addMethod('OPTIONS', new apigateway.MockIntegration({
-            integrationResponses: [{
-                statusCode: '200',
-                responseParameters: {
-                    'method.response.header.Access-Control-Allow-Headers': "'*'",
-                    'method.response.header.Access-Control-Allow-Origin': "'*'",
-                    'method.response.header.Access-Control-Allow-Methods': "'OPTIONS,GET,POST,PUT,DELETE'"
-                },
-            }],
-            passthroughBehavior: apigateway.PassthroughBehavior.NEVER,
-            requestTemplates: {
-                'application/json': '{}'
-            }
-        }), {
-            methodResponses: [{
-                statusCode: '200',
-                responseParameters: {
-                    'method.response.header.Access-Control-Allow-Headers': true,
-                    'method.response.header.Access-Control-Allow-Origin': true,
-                    'method.response.header.Access-Control-Allow-Methods': true
-                }
-            }]
-        });
     }
 }
