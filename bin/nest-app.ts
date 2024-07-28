@@ -1,6 +1,12 @@
 import * as cdk from 'aws-cdk-lib';
-import { NestCdkStack } from '../lib/nest-cdk-stack';
+import { NestCdkStackRDS } from '../lib/nest-cdk-stack';
+import 'dotenv/config'
 
 const app = new cdk.App();
-new NestCdkStack(app, 'MyCdkAppStack');
-app.synth();
+new NestCdkStackRDS(app, 'NestAppStackRDS', {
+    env: {
+        account: process.env.AWS_ACCOUNT_ID,
+        region: process.env.AWS_REGION,
+    },
+});
+app.synth;

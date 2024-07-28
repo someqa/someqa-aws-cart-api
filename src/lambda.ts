@@ -13,7 +13,7 @@ async function bootstrapServer(): Promise<Server> {
     return cachedServer;
 }
 
-export const handler: Handler = async (event, context) => {
+export const handler = async (event, context) => {
     const server = await bootstrapServer();
     return proxy(server, event, context, 'PROMISE').promise;
 };
