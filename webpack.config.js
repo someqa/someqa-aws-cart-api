@@ -8,7 +8,7 @@ module.exports = (options, webpack) => {
     return {
         ...options,
         externals: [],
-        entry: './src/lambda.ts',
+        entry: './src/main-4-docker.ts',
         output: {
             ...options.output,
             libraryTarget: 'commonjs2',
