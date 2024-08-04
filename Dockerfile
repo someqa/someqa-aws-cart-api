@@ -30,7 +30,7 @@ COPY --from=builder /app/dist ./dist
 
 
 # Expose the port the app runs on
-EXPOSE 4000 8080
+EXPOSE 4000 8080 80
 
 # Start the NestJS application
 CMD ["node", "dist/main"]
